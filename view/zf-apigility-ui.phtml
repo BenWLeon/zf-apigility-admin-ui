@@ -6,6 +6,11 @@ $docUri  = (class_exists('ZF\Apigility\Documentation\Module')) ? $this->url('zf-
 
 $basePath = $this->serverUrl(rtrim($this->basePath(), '/') . '/');
 
+//Check for https 
+if ( (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443; ) ) {
+  $basePath = str_replace( 'http://', 'https://', $basePath );
+}  
+
 $html = file_get_contents($path);
 $html = str_replace('%BASE_HREF%', $basePath, $html);
 $html = str_replace('%API_BASE%', $apiBase, $html);
